@@ -105,6 +105,7 @@ def get_args_parser():
 
 
 def main(args):
+    print(torch.cuda.is_available())
     misc.init_distributed_mode(args)
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))

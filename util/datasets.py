@@ -15,15 +15,26 @@ from torchvision import datasets, transforms
 
 from timm.data import create_transform
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
+#Galaxy dataset from HuggingFace
+from datasets import load_dataset
+
 
 
 def build_dataset(is_train, args):
     transform = build_transform(is_train, args)
+    ds = load_dataset("matthieulel/galaxy10_decals")
+    #Below should just be for imagenet cause it should be saved locally
+    # root = os.path.join(args.data_path, 'train' if is_train else 'test')
+    # dataset = datasets.ImageFolder(root, transform=transform)
+    split = ds['train'] if is_train else ds['test']
+    dataset = []
+    for d in split:
+        image, label = transform(d['image']), d['label']
+        dataset.append((image, label))
 
-    root = os.path.join(args.data_path, 'train' if is_train else 'val')
-    dataset = datasets.ImageFolder(root, transform=transform)
 
-    print(dataset)
+
+    # print(dataset)
 
     return dataset
 
