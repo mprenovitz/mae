@@ -20,8 +20,8 @@ from datasets import load_dataset
 
 
 
-def build_dataset(is_train, args):
-    transform = build_transform(is_train, args)
+def build_dataset(is_train, args, t_form, pretrain):
+    transform = build_transform(is_train, args) if not pretrain else t_form
     ds = load_dataset("matthieulel/galaxy10_decals")
     #Below should just be for imagenet cause it should be saved locally
     # root = os.path.join(args.data_path, 'train' if is_train else 'test')
