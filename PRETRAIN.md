@@ -6,7 +6,7 @@ python submitit_pretrain.py --job_dir ${JOB_DIR} --nodes 8 --use_volta32 --batch
     
 ```
 ```
-python main_pretrain.py --batch_size 16 --model mae_vit_large_patch16 --norm_pix_loss --mask_ratio 0.75  --epochs 1  --warmup_epochs 40  --blr 1.5e-4 --weight_decay 0.05 
+python main_pretrain.py --batch_size 16 --model mae_vit_large_patch16 --norm_pix_loss --mask_ratio 0.75  --epochs 1  --warmup_epochs 1  --blr 1.5e-4 --weight_decay 0.05 
     
 ```
 - Here the effective batch size is 64 (`batch_size` per gpu) * 8 (`nodes`) * 8 (gpus per node) = 4096. If memory or # gpus is limited, use `--accum_iter` to maintain the effective batch size, which is `batch_size` (per gpu) * `nodes` * 8 (gpus per node) * `accum_iter`.
