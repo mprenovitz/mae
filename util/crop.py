@@ -21,6 +21,7 @@ class RandomResizedCrop(transforms.RandomResizedCrop):
     """
     @staticmethod
     def get_params(img, scale, ratio):
+        #_get_image_size depricated and is now get_image_size which returns height, width
         height, width = F.get_image_size(img)
         area = height * width
 
