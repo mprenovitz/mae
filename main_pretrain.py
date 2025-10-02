@@ -130,7 +130,7 @@ def main(args):
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
-    dataset_train = build_dataset(is_train=True, args=args, t_form=transform_train, pretrain=True)
+    dataset_train = build_dataset(is_train=True, args=args, t_form=transform_train, has_transform=True)
     print(dataset_train)
 
     if True:  # args.distributed:

@@ -24,6 +24,7 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
 import timm
+from util.datasets import build_dataset
 
 assert timm.__version__ == "0.3.2" # version check
 from timm.models.layers import trunc_normal_
@@ -75,9 +76,10 @@ def get_args_parser():
                         help='Use class token instead of global pool for classification')
 
     # Dataset parameters
-    parser.add_argument('--data_path', default='/datasets01/imagenet_full_size/061417/', type=str,
-                        help='dataset path')
-    parser.add_argument('--nb_classes', default=1000, type=int,
+    #shouldn't be needed because we will just use build_dataset with hf dataset
+    # parser.add_argument('--data_path', default='/datasets01/imagenet_full_size/061417/', type=str,
+    #                     help='dataset path')
+    parser.add_argument('--nb_classes', default=10, type=int,
                         help='number of the classification types')
 
     parser.add_argument('--output_dir', default='./output_dir',
@@ -139,8 +141,10 @@ def main(args):
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-    dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
-    dataset_val = datasets.ImageFolder(os.path.join(args.data_path, 'val'), transform=transform_val)
+    # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
+    # dataset_val = datasets.ImageFolder(os.path.join(args.data_path, 'val'), transform=transform_val)
+    dataset_train = build_dataset(is_train=True, args=args, t_form=transform_train, has_transform=True)
+    dataset_val = build_dataset(is_train=False, args=args, t_form=transform_val, has_transform=True)
     print(dataset_train)
     print(dataset_val)
 
